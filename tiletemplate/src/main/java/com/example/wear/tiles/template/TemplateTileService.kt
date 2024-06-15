@@ -15,14 +15,22 @@
  */
 package com.example.wear.tiles.template
 
-import androidx.wear.tiles.*
-import androidx.wear.tiles.LayoutElementBuilders.LayoutElement
+import androidx.wear.protolayout.DimensionBuilders
+import androidx.wear.protolayout.LayoutElementBuilders
+import androidx.wear.protolayout.ResourceBuilders
+import androidx.wear.protolayout.TimelineBuilders
+import androidx.wear.tiles.RequestBuilders
+import androidx.wear.tiles.TileBuilders
+
 import com.example.wear.tiles.R
-import com.google.android.horologist.tiles.CoroutinesTileService
+import com.google.android.horologist.annotations.ExperimentalHorologistApi
+import com.google.android.horologist.tiles.SuspendingTileService
 
 private const val RESOURCES_VERSION = "0"
 
-class   TemplateTileService : CoroutinesTileService() {
+@ExperimentalHorologistApi
+class TemplateTileService : SuspendingTileService() {
+
 
     override suspend fun resourcesRequest(
         requestParams: RequestBuilders.ResourcesRequest
@@ -49,11 +57,11 @@ class   TemplateTileService : CoroutinesTileService() {
 
         return TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)
-            .setTimeline(singleTileTimeline)
+            .setTileTimeline(singleTileTimeline)
             .build()
     }
 
-    private fun tileLayout(): LayoutElement {
+    private fun tileLayout(): LayoutElementBuilders.LayoutElement {
         val text = getString(R.string.template_tile_body)
         return LayoutElementBuilders.Box.Builder()
             .setVerticalAlignment(LayoutElementBuilders.VERTICAL_ALIGN_CENTER)
